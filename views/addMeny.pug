@@ -1,0 +1,21 @@
+head
+    include includes/head
+body
+    include includes/header
+
+    main
+
+        #meny
+            form(action="/week/create", method="post")
+                ul
+                    each v in ['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag', 'Söndag']
+                        li
+                            .MenyItem
+                                p=v + ' :new item'
+                            
+
+
+        //create a meny
+        //7 food items, a title, a discription,
+
+    include includes/footer

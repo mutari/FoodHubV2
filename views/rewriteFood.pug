@@ -1,0 +1,231 @@
+head
+    include includes/head.pug
+body
+    include includes/header.pug
+
+    main 
+        #addFood
+            form(action=`/rewrite/food/${_id}`, method="post", id="foodForm")
+                input(type="text", name="name", placeholder="name", value=`${name}`)
+                #info
+                    #main
+                        #itemDiv
+                            h3 Add an ingridiens
+                            #items
+                                if Array.isArray(ingridient)
+                                    each item, index in ingridient
+                                        .ing
+                                            input(type="text", name="ingridient", placeholder="ingridiens", value=`${item}`)
+                                            if index < ingridient.length-1
+                                                input(type="button", value="remove", onclick=`delIng(${index})`)
+                                            else
+                                                input(type="button", value="add", onclick=`addIng()`)
+                                else
+                                    .ing
+                                        input(type="text", name="ingridient", placeholder="ingridiens", value=`${ingridient}`)
+                                        input(type="button", value="add", onclick=`addIng()`)
+                        #howTo
+                            textarea(name="discription", placeholder="write a discription max 300 carakters", maxlength="300")=discription
+                            h3 instruktioner
+                            #HTitems
+                                if Array.isArray(howto)
+                                    each item, index in howto
+                                        .ht
+                                            input(type="text", name="howto", placeholder="how to?", value=`${item}`)
+                                            if index < howto.length-1
+                                                input(type="button", value="remove", onclick=`delHT(${index})`)
+                                            else
+                                                input(type="button", value="add", onclick="addHT()")
+                                else
+                                    .ht
+                                        input(type="text", name="howto", placeholder="how to?", value=`${howto}`)
+                                        input(type="button", value="add", onclick="addHT()")
+                    #tagar
+                        h3 Tagar
+                        #tags
+                            #tag
+                                if tag
+                                    each item in tag
+                                        input#newTag(type="text", name="tag", placeholder="tag", value=item)
+                                else
+                                    input#newTag(type="text", name="tag", placeholder="tag")
+                            input#buttonTag(type="button", value="add", onclick="addTag()")
+                input(type="submit", value="update")
+
+
+    include includes/footer.pug
+
+
+    script.
+
+        var tagtips = ['fisk', 'kött', 'vegitariskt', 'efterätt', 'förätt', 'varmrätt', 'kallskuret', 'kykling', 'nöt', 'salad']
+
+        autocomplete(document.getElementById("newTag"), tagtips);
+
+        let antalTagar = 0;
+        function addTag() {
+            var tag = document.getElementById('newTag')
+            var tagar = document.getElementById('tag');
+            var newTag = document.createElement('input');
+            newTag.setAttribute('value', tagar.childNodes[antalTagar].value);
+            newTag.setAttribute('readonly', true);
+            newTag.setAttribute('type', 'text');
+            newTag.setAttribute('name', 'tag');
+            var TagInput = tagar.childNodes[antalTagar];
+            tagar.removeChild(TagInput);
+            TagInput.value = "";
+            tagar.appendChild(newTag);
+            tagar.appendChild(TagInput);
+            antalTagar++;
+
+        }
+        
+
+        let antalIng = document.getElementById('items').childNodes.length-1;
+        let antalHT = document.getElementById('HTitems').childNodes.length-1;
+
+        function addHT() {
+            var form = document.getElementById('HTitems');
+            var ing = document.getElementsByClassName('ht');
+            var newing = document.createElement('div');
+            newing.setAttribute('class', 'ht');
+            newing.innerHTML = ing[antalHT].innerHTML;
+            newing.childNodes[0].setAttribute('value', '');
+            ing[antalHT].childNodes[1].setAttribute('onclick', `delHT(${antalHT})`);
+            ing[antalHT].childNodes[1].setAttribute('value', `remove`);
+            form.appendChild(newing);
+            antalHT++;
+
+        }
+
+        function delHT(id) {
+            var form = document.getElementById('HTitems');
+            form.childNodes[id].remove();
+            antalHT--;
+            for(let i = 0; i < form.childNodes.length-1; i++) {
+                form.childNodes[i].childNodes[1].setAttribute('onclick', `delHT(${i})`);
+            }
+        }
+
+        function addIng() {
+            var form = document.getElementById('items');
+            var ing = document.getElementsByClassName('ing');
+            var newing = document.createElement('div');
+            newing.setAttribute('class', 'ing');
+            newing.innerHTML = ing[antalIng].innerHTML;
+            newing.childNodes[0].setAttribute('value', '');
+            ing[antalIng].childNodes[1].setAttribute('onclick', `delIng(${antalIng})`);
+            ing[antalIng].childNodes[1].setAttribute('value', `remove`);
+            form.appendChild(newing);
+            antalIng++;
+
+        }
+
+        function delIng(id) {
+            var form = document.getElementById('items');
+            form.childNodes[id].remove();
+            antalIng--;
+            for(let i = 0; i < form.childNodes.length-1; i++) {
+                form.childNodes[i].childNodes[1].setAttribute('onclick', `delIng(${i})`);
+            }
+        }
+
+
+        //kopierat i från w3schools.com
+        //https://www.w3schools.com/howto/howto_js_autocomplete.asp
+        function autocomplete(inp, arr) {
+            /*the autocomplete function takes two arguments,
+            the text field element and an array of possible autocompleted values:*/
+            var currentFocus;
+            /*execute a function when someone writes in the text field:*/
+            inp.addEventListener("input", function(e) {
+                var a, b, i, val = this.value;
+                /*close any already open lists of autocompleted values*/
+                closeAllLists();
+                if (!val) { return false;}
+                currentFocus = -1;
+                /*create a DIV element that will contain the items (values):*/
+                a = document.createElement("DIV");
+                a.setAttribute("id", this.id + "autocomplete-list");
+                a.setAttribute("class", "autocomplete-items");
+                /*append the DIV element as a child of the autocomplete container:*/
+                this.parentNode.appendChild(a);
+                /*for each item in the array...*/
+                for (i = 0; i < arr.length; i++) {
+                    /*check if the item starts with the same letters as the text field value:*/
+                    if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                        b.addEventListener("click", function(e) {
+                        /*insert the value for the autocomplete text field:*/
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        /*close the list of autocompleted values,
+                        (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                    }
+                }
+            });
+            /*execute a function presses a key on the keyboard:*/
+            inp.addEventListener("keydown", function(e) {
+                var x = document.getElementById(this.id + "autocomplete-list");
+                if (x) x = x.getElementsByTagName("div");
+                if (e.keyCode == 40) {
+                    /*If the arrow DOWN key is pressed,
+                    increase the currentFocus variable:*/
+                    currentFocus++;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 38) { //up
+                    /*If the arrow UP key is pressed,
+                    decrease the currentFocus variable:*/
+                    currentFocus--;
+                    /*and and make the current item more visible:*/
+                    addActive(x);
+                } else if (e.keyCode == 13) {
+                    /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                    e.preventDefault();
+                    if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                    }
+                }
+            });
+            function addActive(x) {
+                /*a function to classify an item as "active":*/
+                if (!x) return false;
+                /*start by removing the "active" class on all items:*/
+                removeActive(x);
+                if (currentFocus >= x.length) currentFocus = 0;
+                if (currentFocus < 0) currentFocus = (x.length - 1);
+                /*add class "autocomplete-active":*/
+                x[currentFocus].classList.add("autocomplete-active");
+            }
+            function removeActive(x) {
+                /*a function to remove the "active" class from all autocomplete items:*/
+                for (var i = 0; i < x.length; i++) {
+                    x[i].classList.remove("autocomplete-active");
+                }
+            }
+            function closeAllLists(elmnt) {
+                /*close all autocomplete lists in the document,
+                except the one passed as an argument:*/
+                var x = document.getElementsByClassName("autocomplete-items");
+                for (var i = 0; i < x.length; i++) {
+                    if (elmnt != x[i] && elmnt != inp) {
+                        x[i].parentNode.removeChild(x[i]);
+                    }
+                }
+            }
+            /*execute a function when someone clicks in the document:*/
+            document.addEventListener("click", function (e) {
+                closeAllLists(e.target);
+            });
+        }

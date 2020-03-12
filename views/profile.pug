@@ -1,0 +1,62 @@
+head
+    include includes/head.pug
+body
+    include includes/header.pug
+
+    main
+        #profile
+            #profileHeader
+                h1=username
+
+            #profileInfo
+                #profileSide
+                    h2 About
+                        a(href=`/rewrite/profile`)
+                            i(class="big material-icons create") create
+                    ul
+                        li
+                            p.infoName Name
+                            p.info=name ? name : "null"
+                        li
+                            p.infoName Email
+                            p.info=email ? email : "null"
+                        li
+                            p.infoName Phone
+                            p.info=phone ? phone : "null"
+                        
+                        
+
+                #profileMain
+                    #foodCreated
+                        h4 skapade av mig
+
+                        ul
+                            each item in foods
+                                li
+                                    .card
+                                        img(src=`${item.image}`, alt=`'${item.name}' image`, onclick=`location.href = '/get/${item._id}';`)
+                                        h3=item.name
+                                        p=item.discription
+                                        .tools
+                                            a(href=`/delete/food/${item._id}`)
+                                                i(class="tiny material-icons delete") delete
+                                            a(href=`/rewrite/food/${item._id}`)
+                                                i(class="tiny material-icons create") create
+                    #foodSaved
+                        h4 Sparade maträter
+
+                        ul
+                            each item in save
+                                li
+                                    .card
+                                        img(src=`${item.image}`, alt=`'${item.name}' image`, onclick=`location.href = '/get/${item._id}';`)
+                                        h3=item.name
+                                        p=item.discription
+                                        .tools
+                                            a(href=`/save/${item._id}`)
+                                                i(class="tiny material-icons save", class="saved") save
+                                        .user
+                                            a(href=`/profile/${(item.user ? item.user.id : '0')}`)='by: ' + (item.user ? item.user.username : 'admin') 
+        
+
+    include includes/footer.pug

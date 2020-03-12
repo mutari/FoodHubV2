@@ -1,0 +1,56 @@
+- var saved = 0;
+
+head
+    include includes/head.pug
+body
+    include includes/header.pug
+
+    main 
+        #foods
+            #tools
+                form(action="/sort", method="post", autocomplete="off")
+                    #tag
+                        input(type="text", placeholder="search by tag", name="search", id="search")
+                        input(type="submit", value="sök")
+
+            ul
+                each item in items
+                    li
+                        .card
+                            img(src=`${item.image}`, alt=`'${item.name}' image`, onclick=`location.href = '/get/${item._id}';`)
+                            h3=item.name
+                            p=item.discription
+                            .tools
+                                a(href=`/save/${item._id}`)
+                                    if profile
+                                        each save in profile.save
+                                            if save == item._id
+                                                - saved++
+                                                i(class="tiny material-icons save saved") save
+                                    if saved == 0
+                                        i(class="tiny material-icons save") save
+                                    else
+                                        - saved--
+                            .user
+                                a(href=`/profile/${(item.user ? item.user.id : '0')}`)='by: ' + (item.user ? item.user.username : 'admin') 
+            if side
+                #sideTools
+                    if side > 0
+                        a(href=`/?side=${Number(side)-1}`) back
+                    #numes
+                        each val in [Number(side)-2, Number(side)-1, Number(side), Number(side)+1, Number(side)+2]
+                            if val >= 0 && val <= maxside
+                                a(href=`/?side=${val}`)=val
+                    if side < maxside
+                        a(href=`/?side=${Number(side)+1}`) next
+
+    include includes/footer.pug
+
+
+    script(src="/autocomplete.js")
+
+    script.
+
+        var tagtips = ['fisk', 'kött', 'vegitariskt', 'efterätt', 'förätt', 'varmrätt', 'kallskuret', 'kykling', 'nöt', 'salad']
+
+        autocomplete(document.getElementById("search"), tagtips);

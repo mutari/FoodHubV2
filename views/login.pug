@@ -1,0 +1,21 @@
+head
+    include includes/head.pug
+body
+    header
+        #head
+            #top
+                #mainpath
+                    a(href="/")
+                        img(src="/FoodHub.png", alt="", srcset="", width="100px")
+
+    main
+        #login
+            form(action="/login", method="post")
+                input(type="email", name="email", placeholder="email")
+                input(type="password", name="password", placeholder="password")
+                #button
+                    input(type="submit", value="login")
+                a(href="/createacc") create a new acount
+
+
+    include includes/footer.pug

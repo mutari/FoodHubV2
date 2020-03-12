@@ -1,0 +1,20 @@
+head
+    include includes/head.pug
+body
+    header
+        #head
+            #top
+                #mainpath
+                    a(href="/")
+                        img(src="/FoodHub.png", alt="", srcset="", width="100px")
+
+    main
+        #login
+            form(action="/rewrite/profile", method="post")
+                input(type="text", name="name", placeholder="namn", value=`${name ? name : ""}`)
+                input(type="text", name="email", placeholder="email", value=`${email ? email : ""}`)
+                input(type="text", name="phone", placeholder="telefonummer", value=`${phone ? phone : ""}`)
+                #buttonCreate
+                    input(type="submit", value="uppdate")
+
+    include includes/footer.pug

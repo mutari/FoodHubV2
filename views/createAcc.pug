@@ -1,0 +1,27 @@
+head
+    include includes/head.pug
+body
+    header
+        #head
+            #top
+                #mainpath
+                    a(href="/")
+                        img(src="/FoodHub.png", alt="", srcset="", width="100px")
+
+    main
+        #login
+
+            if old
+                p=old.msg
+        
+            form(action="/createacc", method="post")
+                input(type="text", name="username", placeholder="användarnamn", value=`${old ? old.username : ''}`)
+                input(type="text", name="name", placeholder="namn", value=`${old ? old.name : ''}`)
+                input(type="password", name="password", placeholder="lösenord")
+                input(type="password", name="password_rep", placeholder="skriv lösenord igen")
+                input(type="text", name="email", placeholder="email", value=`${old ? old.email : ''}`)
+                #buttonCreate(class="bbiger")
+                    input(type="submit", value="skapa konto")
+                a(href="/login") or login!
+
+    include includes/footer.pug

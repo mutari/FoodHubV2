@@ -1,0 +1,123 @@
+head
+    include includes/head.pug
+body
+    include includes/header.pug
+
+    main 
+        #addFood
+            form(action="/create/food", method="post", id="foodForm", autocomplete="off", enctype="multipart/form-data")
+                input(type="text", name="name", placeholder="name")
+                #info
+                    #main
+                        #itemDiv
+                            label
+                                #prev
+                                    img(id="previmg", src="/image/cloud-computing.png", alt="uppload an image")
+                                input#img(type="file", name="image")
+                            h3 Add an ingridiens
+                            #items
+                                .ing
+                                    input(type="text", name="ingridient", placeholder="ingridiens")
+                                    input(type="button", value="add", onclick="addIng()")
+                        #howTo
+                            textarea(name="discription", placeholder="write a discription max 300 carakters", maxlength="300")
+                            h3 instruktioner
+                            #HTitems
+                                .ht
+                                    input(type="text", name="howto", placeholder="how to?")
+                                    input(type="button", value="add", onclick="addHT()")
+                    #tagar
+                        h3 Tagar
+                        #tags
+                            #tag
+                                input#newTag(type="text", name="tag", placeholder="tag")
+                            input#buttonTag(type="button", value="add", onclick="addTag()")
+                input(type="submit", value="create")
+
+
+    include includes/footer.pug
+
+    script(src="/autocomplete.js")
+
+    script.
+
+        //show images
+        document.getElementById('img').addEventListener('change', () => {
+            console.log(document.getElementById('img').files[0]);
+
+            const reader = new FileReader();
+            reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(document.getElementById('previmg'));
+            reader.readAsDataURL(document.getElementById('img').files[0]);
+        });
+
+        //taggar
+        var tagtips = ['fisk', 'kött', 'vegitariskt', 'efterätt', 'förätt', 'varmrätt', 'kallskuret', 'kykling', 'nöt', 'salad']
+
+        autocomplete(document.getElementById("newTag"), tagtips);
+
+        //remove and add items
+        let antalTagar = 0;
+        function addTag() {
+            var tag = document.getElementById('newTag')
+            var tagar = document.getElementById('tag');
+            var newTag = document.createElement('input');
+            newTag.setAttribute('value', tagar.childNodes[antalTagar].value);
+            newTag.setAttribute('readonly', true);
+            newTag.setAttribute('type', 'text');
+            newTag.setAttribute('name', 'tag');
+            var TagInput = tagar.childNodes[antalTagar];
+            tagar.removeChild(TagInput);
+            TagInput.value = "";
+            tagar.appendChild(newTag);
+            tagar.appendChild(TagInput);
+            antalTagar++;
+
+        }
+
+
+        let antalIng = 0;
+        let antalHT = 0;
+
+        function addHT() {
+            var form = document.getElementById('HTitems');
+            var ing = document.getElementsByClassName('ht');
+            var newing = document.createElement('div');
+            newing.setAttribute('class', 'ht');
+            newing.innerHTML = ing[antalHT].innerHTML;
+            ing[antalHT].childNodes[1].setAttribute('onclick', `delHT(${antalHT})`);
+            ing[antalHT].childNodes[1].setAttribute('value', `remove`);
+            form.appendChild(newing);
+            antalHT++;
+
+        }
+
+        function delHT(id) {
+            var form = document.getElementById('HTitems');
+            form.childNodes[id].remove();
+            antalHT--;
+            for(let i = 0; i < form.childNodes.length-1; i++) {
+                form.childNodes[i].childNodes[1].setAttribute('onclick', `delHT(${i})`);
+            }
+        }
+
+        function addIng() {
+            var form = document.getElementById('items');
+            var ing = document.getElementsByClassName('ing');
+            var newing = document.createElement('div');
+            newing.setAttribute('class', 'ing');
+            newing.innerHTML = ing[antalIng].innerHTML;
+            ing[antalIng].childNodes[1].setAttribute('onclick', `delIng(${antalIng})`);
+            ing[antalIng].childNodes[1].setAttribute('value', `remove`);
+            form.appendChild(newing);
+            antalIng++;
+
+        }
+
+        function delIng(id) {
+            var form = document.getElementById('items');
+            form.childNodes[id].remove();
+            antalIng--;
+            for(let i = 0; i < form.childNodes.length-1; i++) {
+                form.childNodes[i].childNodes[1].setAttribute('onclick', `delIng(${i})`);
+            }
+        }

@@ -1,0 +1,52 @@
+head
+    include includes/head.pug
+body
+    include includes/header.pug
+
+    main 
+        #FoodInfo
+            h1=name
+            #info
+                #main
+                    #itemDiv
+                        img(src=`${image}`, alt=`'${name}' image`)
+                        .block
+                        h3 ingridiens
+                        #items
+                            if Array.isArray(ingridient)
+                                each item in ingridient
+                                    .ing
+                                        p=item
+                            else
+                                .ing
+                                    p=ingridient
+                    #howTo
+                        h3 beskrivning
+                        p.textarea=discription
+                        .block
+                        h3 instruktioner
+                        #HTitems
+                            if Array.isArray(howto)
+                                each item, index in howto
+                                    .ht
+                                        p.index=index+1
+                                        p.instr=item
+                            else
+                                .ht
+                                    p.index=1
+                                    p.instr=howto
+                #tagar
+                    h3 Tagar
+                    #tags
+                        #tag
+                            if tag
+                                if Array.isArray(tag)
+                                    each item in tag
+                                        p=item
+                                else
+                                    p=tag
+                            else
+                                p="notag"
+
+
+    include includes/footer.pug

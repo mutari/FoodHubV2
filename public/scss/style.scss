@@ -1,0 +1,800 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+.hide {
+    display: none;
+}
+
+.block {
+    margin: 0;
+    padding: 0;
+    border: none;
+    height: 50px;
+}
+
+.autocomplete-items {
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #fff;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-items div:hover {
+    /*when hovering an item:*/
+    background-color: #e9e9e9;
+}
+.autocomplete-active {
+    /*when navigating through the items using the arrow keys:*/
+    background-color: DodgerBlue !important;
+    color: #ffffff;
+}
+
+//food cards
+.card {
+    position: relative;
+    background-color: rgb(255, 255, 255);
+    margin: 5px;
+
+    width: 293px;
+    height: 325px;
+
+    border-left: solid rgb(255, 123, 0);
+    margin-bottom: 4px;
+
+    h3 {
+        padding: 0 3px 0 3px;
+        text-align: center;
+        max-height: 22;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    p {
+        padding: 0 3px 0 3px;
+        max-height: 56px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;  
+    }
+
+    .tools {
+        position: absolute;
+        bottom: 0;
+
+        a {
+            padding: 4px;
+            color: black;
+
+            .delete:hover {
+                color: red;
+            }
+
+            .create:hover {
+                color: green;
+            }
+
+            .save:hover {
+                color: blue;
+            }
+
+        }
+
+    }
+
+    .user {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+
+        a {
+            color: black;
+        }
+    }
+
+}
+
+.card:hover {
+    transform: scale(1.05);
+    z-index: 1000;
+    box-shadow: 0px 0px 10px 4px gray;
+}
+
+.saved {
+    color: red;
+}
+
+body {
+
+    //header.pug
+    header {
+        display: flex;
+        justify-content: center;
+        background-color: rgb(255, 255, 255);
+        margin-bottom: 20px;
+
+        #head {
+            width: 100%;
+            height: 100%;
+            padding: 10px;
+            text-align: center;
+            
+            #top {
+                margin-top: 5px;
+                display: grid;
+                grid-template-columns: 10px 40px 1fr 40px 10px;
+                grid-template-areas: ". . img profile .";
+
+                #mainpath {
+                    grid-area: img;
+                    img {
+                        margin-bottom: 20px;
+                    }
+                }
+
+                #profile {
+                    grid-area: profile;
+
+                    #loginb {
+                        text-decoration: none;
+                        border-right: solid rgb(255, 123, 0);
+                        color: black;
+                        padding: 6px;
+                    }
+
+                    :hover {
+                        background-color: rgb(236, 236, 236);
+                    }
+
+                }
+            }
+
+            nav {
+                position: sticky;
+                top: 0;
+                width: 100%;
+
+                ul {
+                    list-style-type: none;
+                    display: flex;
+                    justify-content: center;
+        
+                    li {
+
+                        border-left: solid rgb(255, 123, 0);
+
+                        a {
+                            flex-direction: row;
+                            padding: 10px;
+                            text-decoration: none;
+                            color: black;
+
+                        }
+
+                        :hover { 
+                            background-color: rgb(236, 236, 236);
+                        }
+
+                    }
+
+                }
+        
+            }
+        }
+    
+    }
+
+    //footer.pug
+    footer {
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        margin-bottom: 10px;
+    }
+
+    main {
+        margin: 0 30px 0 30px;
+        padding-bottom: 20px;
+        background-color: rgb(245, 245, 245);
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+
+
+        //index.pug
+        #foods {
+            padding: 10px 30px 30px 30px;
+            display: block;
+
+            #tools {
+                margin: 0 10px 50px 10px;
+                width: 100%;
+
+                form {
+                    float: right;
+
+                    input {
+                        height: 22px;
+                        font-size: 15px;
+                        text-align: center;
+                        margin: 5px;
+                        background-color: rgba(0, 0, 0, 0);
+                        outline: none;
+                        border: none;
+                        border-bottom: solid 1px;
+                    }
+
+                    position: relative;
+
+                    form {
+                        display: block;
+
+                        #tag {
+                            position: relative;
+
+                            #search {
+                                width: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+
+            ul {
+                list-style-type: none;    
+                //display: inline-block;
+                margin: auto;
+                //column-count: 3;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-gap: 20px;
+
+                li {
+                    display: inline-block;
+                }
+
+            }
+
+            #sideTools {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 40px;
+
+                a {
+                    display: flex;
+                    color: orange;
+                    text-decoration: none;
+                    width: 20px;
+                    height: 20px;
+                    align-self: center;
+                    justify-content: center;
+                    border-bottom: solid 1px;
+                    padding: 5px;
+                }
+
+                #numes {
+                    display: flex;
+                    flex-direction: row;
+                    padding: 5px;
+
+                    a {
+                        color: black;
+                    }
+
+                }
+
+            }
+
+        }
+
+
+        //addFood.pug || rewriteFood.pug
+        #addFood {
+            width: 100%;
+
+            form {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+
+                input, textarea {
+                    height: 45px;
+                    font-size: 30px;
+                    text-align: center;
+                    margin: 5px;
+                    background-color: rgba(0, 0, 0, 0);
+                    outline: none;
+                    border: none;
+                    border-bottom: solid 1px;
+                }
+
+                input[name="name"] {
+                    flex: 2;
+                    width: 90%;
+                }
+
+                #info {
+                    width: 90%;
+                    display: flex;
+                    flex-direction: column;
+
+                    #main {
+
+                        width: 100%;
+                        display: flex;
+
+                        #itemDiv {
+
+                            flex: 1;
+                            display: flex;
+                            flex-direction: column;
+                            border-right: solid 1px;
+                            padding: 5px 10px 5px 10px;
+
+                            label {
+
+                                #prev {
+                                    display: flex;
+                                    justify-content: center;
+                                    border: solid 1px;
+                                    width: 298px;
+                                    height: 223px;
+
+                                    img {
+                                        max-width: 100%;
+                                        max-height: 100%;
+                                        display: block;
+                                    }
+                                }
+
+                                input {
+                                    display: none;
+                                }
+
+                            }
+    
+                            h3 {
+                                margin-top: 10px;
+                                color: gray;
+                                text-align: center;
+                            }
+    
+                            #items {
+                                flex: 1;
+        
+                                .ing {
+                                    width: 100%;
+                                    display: flex;
+        
+                                    input {
+        
+                                        font-size: 15px;
+                                    }
+        
+                                    input[type="text"] {
+                                        flex: 4;
+                                    }
+        
+                                    input[type="button"] {
+                                        flex: 1;
+                                    }
+        
+                                }
+                            }
+    
+                        }
+    
+                        #howTo {
+
+                            flex: 3;
+                            display: flex;
+                            align-items: center;
+                            display: flex;
+                            flex-direction: column;
+    
+    
+                            textarea {
+                                padding: 10px;
+                                border-top: solid 1px;
+                                font-size: 15px;
+                                width: 95%;
+                                height: 75px;
+                                resize: none;
+                            }
+    
+                            h3 {
+                                color: gray;
+                                text-align: center;
+                            }
+    
+                            #HTitems {
+    
+                                width: 96%;
+    
+                                .ht {
+                                    width: 100%;
+                                    display: flex;
+        
+                                    input {
+                                        font-size: 15px;
+                                    }
+        
+                                    input[type="text"] {
+                                        flex: 4;
+                                    }
+        
+                                    input[type="button"] {
+                                        flex: 1;
+                                    }
+                                }
+    
+                            }
+    
+                        }
+
+                    }
+
+                    #tagar {
+                        
+                        margin-top: 30px;
+                        display: block;
+                        border-top: solid 1px;
+
+                        h3 {
+                            color: gray;
+                            width: 100%;
+                            text-align: center;
+                        }
+
+                        #tags {
+                            display: flex;
+                            flex-direction: row;
+
+                            input {
+                                font-size: 10px;
+                            }
+
+                            #tag {
+
+                                position: relative;
+
+                                input[type="text"] {
+                                    width: 50px;
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                }
+
+            }
+
+        }
+
+
+        //FoodInfo.pug
+        #FoodInfo {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            align-items: center;
+            padding: 20px 0 20px 0;
+
+            h1 {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            p {
+                text-align: center;
+                margin: 5px;
+                outline: none;
+                border-left: solid 1px rgb(255, 123, 0);
+                width: 100%;
+                font-size: 25px;
+                min-height: 30px;
+                padding: 3px;
+            }
+
+            #info {
+                width: 90%;
+                display: flex;
+                flex-direction: column;
+
+                #main {
+                    display: flex;
+
+
+                    #itemDiv {
+                        flex: 1;
+                        display: flex;
+                        flex-direction: column;
+                        border-right: solid 1px;
+    
+                        img {
+                            margin: 10px;
+                        }
+    
+                        .block {
+                            height: 20px
+                        }
+    
+                        h3 {
+                            color: gray;
+                            text-align: center;
+                        }
+    
+                        #items {
+                            flex: 1;
+                            margin-right: 10px;
+                            padding-right: 10px;
+    
+                            .ing {
+                                width: 100%;
+                                display: flex;
+    
+                                p {
+                                    text-align: left;
+                                }
+    
+                            }
+                        }
+    
+                    }
+    
+                    #howTo {
+                        flex: 3;
+                        display: flex;
+                        align-items: center;
+                        display: flex;
+                        flex-direction: column;
+                        padding-top: 25px;
+    
+                        .textarea {
+                            border: none;
+                            outline: none;
+                            padding: 10px;
+                            border-top: solid 1px rgb(255, 123, 0);
+                            border-bottom: solid 1px rgb(255, 123, 0);
+                            width: 95%;
+                            margin: 20px;
+                            font-size: 20px;
+                        }
+    
+                        .block {
+                            height: 100px;
+                        }
+    
+                        h3 {
+                            color: gray;
+                            text-align: center;
+                        }
+    
+                        #HTitems {
+    
+                            width: 96%;
+    
+                            .ht {
+                                width: 100%;
+                                display: flex;
+    
+                                .instr {
+                                    text-align: left;
+                                    padding-left: 10px;
+                                }
+    
+                                .index {
+                                    width: 30px;
+                                    color:  rgb(255, 123, 0);
+                                    border: none;
+                                }
+                            }
+    
+                        }
+    
+                    }
+                }   
+
+                #tagar {
+                        
+                    margin-top: 30px;
+                    display: block;
+                    border-top: solid 1px;
+
+                    h3 {
+                        color: gray;
+                        width: 100%;
+                        text-align: center;
+                    }
+
+                    #tags {
+                        display: flex;
+                        flex-direction: row;
+
+                        #tag {
+                            display: flex;
+                            flex-direction: row;
+
+                            p {
+                                font-size: 10px;
+                                width: 50px;
+                                border: none;
+                                border-bottom: solid 1px rgb(255, 123, 0);
+                            }
+                        }
+
+                    }
+
+                }
+
+            }
+        }
+
+        //login.pug || createAcc.pug
+        #login {
+
+            border-left: solid rgb(255, 123, 0);
+            margin: 35px;
+
+            form {
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+
+                input {
+                    margin: 1px;
+                    padding: 4px;
+                    height: 30px;
+                    width: 200px;
+                    font-size: 20px;
+                    background: none;
+                    border: none;
+                    border-bottom: solid 1px black;
+                    outline: none;
+                }
+
+                #button {
+                    display: flex;
+                    justify-content: center;
+                    input {
+                        width: 80px;
+                    }
+                }
+
+                #buttonCreate {
+                    display: flex;
+                    justify-content: center;
+                    input {
+                        width: 120px;
+                    }
+                }
+                
+                a {
+                    float: right;
+                    margin-top: 10px;
+                }
+
+            }
+
+        }
+
+        #profile {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            width: 100%;
+
+
+            #profileHeader {
+                width: 100%;
+
+                h1 {
+                    grid-area: name;
+                    text-align: center;
+                    width: 100%;
+                    margin-bottom: 20px;
+                }
+
+            }
+
+            #profileInfo {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+
+                #profileSide {
+                    flex: 1;
+                    border-right: solid rgb(255, 123, 0);
+                    padding-left: 20px;
+                    padding-top: 30px;
+
+                    h2 {
+                        margin-bottom: 10px;
+                        text-align: center;
+
+                        a {
+                            color: black;
+                        }
+
+                    }
+
+                    ul {
+
+                        li {
+                            list-style-type: none;
+                            border-left: solid rgb(255, 123, 0);
+                            margin-bottom: 10px;
+                            padding-left: 5px;
+
+                            .infoName {
+
+                            }
+
+                            .info {
+                                color: gray;
+                                margin-left: 10px;
+                            }   
+                        }
+                    }
+                }
+
+                #profileMain {
+                    flex: 3;
+
+                    #foodCreated, #foodSaved {
+                        padding: 30px;
+                        display: block;
+
+                        h4 {
+                            text-align: center;
+                            margin-right: 80px;
+                            padding-bottom: 20px;
+                        }
+        
+                        ul {
+                            list-style-type: none;    
+                            //display: inline-block;
+                            margin: auto;
+                            //column-count: 2;
+                            display: grid;
+                            grid-template-columns: repeat(3, 1fr);
+                            grid-gap: 20px;
+        
+                            li {
+                                display: inline-block;
+                            }
+
+                        }
+                    }
+                } 
+            }
+        }
+    }
+}

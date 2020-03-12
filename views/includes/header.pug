@@ -1,0 +1,24 @@
+header
+    #head
+        #top
+            #mainpath
+                a(href="/")
+                    img(src="/FoodHub.png", alt="", srcset="", width="100px")
+            #profile
+                if logedIn=="no-token"
+                    a(href="/login" id="loginb") login
+                else
+                    a(href="/logout", id="loginb") logout
+                
+        nav
+            ul
+                li 
+                    a(href="/create/food") nytt recept
+                li
+                    a(href="/week/meny") vekans meny
+                li
+                    if logedIn=="no-token"
+                        a(href="/profile") profile
+                    else
+                        a(href="/profile")=logedIn
+        

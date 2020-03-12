@@ -1,0 +1,612 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.hide {
+  display: none;
+}
+
+.block {
+  margin: 0;
+  padding: 0;
+  border: none;
+  height: 50px;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: #e9e9e9;
+}
+
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: DodgerBlue !important;
+  color: #ffffff;
+}
+
+.card {
+  position: relative;
+  background-color: white;
+  margin: 5px;
+  width: 293px;
+  height: 325px;
+  border-left: solid #ff7b00;
+  margin-bottom: 4px;
+}
+.card h3 {
+  padding: 0 3px 0 3px;
+  text-align: center;
+  max-height: 22;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card img {
+  width: 100%;
+}
+.card p {
+  padding: 0 3px 0 3px;
+  max-height: 56px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.card .tools {
+  position: absolute;
+  bottom: 0;
+}
+.card .tools a {
+  padding: 4px;
+  color: black;
+}
+.card .tools a .delete:hover {
+  color: red;
+}
+.card .tools a .create:hover {
+  color: green;
+}
+.card .tools a .save:hover {
+  color: blue;
+}
+.card .user {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+.card .user a {
+  color: black;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  z-index: 1000;
+  box-shadow: 0px 0px 10px 4px gray;
+}
+
+.saved {
+  color: red;
+}
+
+body header {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  margin-bottom: 20px;
+}
+body header #head {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  text-align: center;
+}
+body header #head #top {
+  margin-top: 5px;
+  display: grid;
+  grid-template-columns: 10px 40px 1fr 40px 10px;
+  grid-template-areas: ". . img profile .";
+}
+body header #head #top #mainpath {
+  grid-area: img;
+}
+body header #head #top #mainpath img {
+  margin-bottom: 20px;
+}
+body header #head #top #profile {
+  grid-area: profile;
+}
+body header #head #top #profile #loginb {
+  text-decoration: none;
+  border-right: solid #ff7b00;
+  color: black;
+  padding: 6px;
+}
+body header #head #top #profile :hover {
+  background-color: #ececec;
+}
+body header #head nav {
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+body header #head nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: center;
+}
+body header #head nav ul li {
+  border-left: solid #ff7b00;
+}
+body header #head nav ul li a {
+  flex-direction: row;
+  padding: 10px;
+  text-decoration: none;
+  color: black;
+}
+body header #head nav ul li :hover {
+  background-color: #ececec;
+}
+body footer {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  margin-bottom: 10px;
+}
+body main {
+  margin: 0 30px 0 30px;
+  padding-bottom: 20px;
+  background-color: whitesmoke;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+}
+body main #foods {
+  padding: 10px 30px 30px 30px;
+  display: block;
+}
+body main #foods #tools {
+  margin: 0 10px 50px 10px;
+  width: 100%;
+}
+body main #foods #tools form {
+  float: right;
+  position: relative;
+}
+body main #foods #tools form input {
+  height: 22px;
+  font-size: 15px;
+  text-align: center;
+  margin: 5px;
+  background-color: rgba(0, 0, 0, 0);
+  outline: none;
+  border: none;
+  border-bottom: solid 1px;
+}
+body main #foods #tools form form {
+  display: block;
+}
+body main #foods #tools form form #tag {
+  position: relative;
+}
+body main #foods #tools form form #tag #search {
+  width: 50%;
+}
+body main #foods ul {
+  list-style-type: none;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+body main #foods ul li {
+  display: inline-block;
+}
+body main #foods #sideTools {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 40px;
+}
+body main #foods #sideTools a {
+  display: flex;
+  color: orange;
+  text-decoration: none;
+  width: 20px;
+  height: 20px;
+  align-self: center;
+  justify-content: center;
+  border-bottom: solid 1px;
+  padding: 5px;
+}
+body main #foods #sideTools #numes {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+body main #foods #sideTools #numes a {
+  color: black;
+}
+body main #addFood {
+  width: 100%;
+}
+body main #addFood form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+body main #addFood form input, body main #addFood form textarea {
+  height: 45px;
+  font-size: 30px;
+  text-align: center;
+  margin: 5px;
+  background-color: rgba(0, 0, 0, 0);
+  outline: none;
+  border: none;
+  border-bottom: solid 1px;
+}
+body main #addFood form input[name=name] {
+  flex: 2;
+  width: 90%;
+}
+body main #addFood form #info {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+body main #addFood form #info #main {
+  width: 100%;
+  display: flex;
+}
+body main #addFood form #info #main #itemDiv {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: solid 1px;
+  padding: 5px 10px 5px 10px;
+}
+body main #addFood form #info #main #itemDiv label #prev {
+  display: flex;
+  justify-content: center;
+  border: solid 1px;
+  width: 298px;
+  height: 223px;
+}
+body main #addFood form #info #main #itemDiv label #prev img {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+body main #addFood form #info #main #itemDiv label input {
+  display: none;
+}
+body main #addFood form #info #main #itemDiv h3 {
+  margin-top: 10px;
+  color: gray;
+  text-align: center;
+}
+body main #addFood form #info #main #itemDiv #items {
+  flex: 1;
+}
+body main #addFood form #info #main #itemDiv #items .ing {
+  width: 100%;
+  display: flex;
+}
+body main #addFood form #info #main #itemDiv #items .ing input {
+  font-size: 15px;
+}
+body main #addFood form #info #main #itemDiv #items .ing input[type=text] {
+  flex: 4;
+}
+body main #addFood form #info #main #itemDiv #items .ing input[type=button] {
+  flex: 1;
+}
+body main #addFood form #info #main #howTo {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+body main #addFood form #info #main #howTo textarea {
+  padding: 10px;
+  border-top: solid 1px;
+  font-size: 15px;
+  width: 95%;
+  height: 75px;
+  resize: none;
+}
+body main #addFood form #info #main #howTo h3 {
+  color: gray;
+  text-align: center;
+}
+body main #addFood form #info #main #howTo #HTitems {
+  width: 96%;
+}
+body main #addFood form #info #main #howTo #HTitems .ht {
+  width: 100%;
+  display: flex;
+}
+body main #addFood form #info #main #howTo #HTitems .ht input {
+  font-size: 15px;
+}
+body main #addFood form #info #main #howTo #HTitems .ht input[type=text] {
+  flex: 4;
+}
+body main #addFood form #info #main #howTo #HTitems .ht input[type=button] {
+  flex: 1;
+}
+body main #addFood form #info #tagar {
+  margin-top: 30px;
+  display: block;
+  border-top: solid 1px;
+}
+body main #addFood form #info #tagar h3 {
+  color: gray;
+  width: 100%;
+  text-align: center;
+}
+body main #addFood form #info #tagar #tags {
+  display: flex;
+  flex-direction: row;
+}
+body main #addFood form #info #tagar #tags input {
+  font-size: 10px;
+}
+body main #addFood form #info #tagar #tags #tag {
+  position: relative;
+}
+body main #addFood form #info #tagar #tags #tag input[type=text] {
+  width: 50px;
+}
+body main #FoodInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  padding: 20px 0 20px 0;
+}
+body main #FoodInfo h1 {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+body main #FoodInfo p {
+  text-align: center;
+  margin: 5px;
+  outline: none;
+  border-left: solid 1px #ff7b00;
+  width: 100%;
+  font-size: 25px;
+  min-height: 30px;
+  padding: 3px;
+}
+body main #FoodInfo #info {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+body main #FoodInfo #info #main {
+  display: flex;
+}
+body main #FoodInfo #info #main #itemDiv {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: solid 1px;
+}
+body main #FoodInfo #info #main #itemDiv img {
+  margin: 10px;
+}
+body main #FoodInfo #info #main #itemDiv .block {
+  height: 20px;
+}
+body main #FoodInfo #info #main #itemDiv h3 {
+  color: gray;
+  text-align: center;
+}
+body main #FoodInfo #info #main #itemDiv #items {
+  flex: 1;
+  margin-right: 10px;
+  padding-right: 10px;
+}
+body main #FoodInfo #info #main #itemDiv #items .ing {
+  width: 100%;
+  display: flex;
+}
+body main #FoodInfo #info #main #itemDiv #items .ing p {
+  text-align: left;
+}
+body main #FoodInfo #info #main #howTo {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding-top: 25px;
+}
+body main #FoodInfo #info #main #howTo .textarea {
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-top: solid 1px #ff7b00;
+  border-bottom: solid 1px #ff7b00;
+  width: 95%;
+  margin: 20px;
+  font-size: 20px;
+}
+body main #FoodInfo #info #main #howTo .block {
+  height: 100px;
+}
+body main #FoodInfo #info #main #howTo h3 {
+  color: gray;
+  text-align: center;
+}
+body main #FoodInfo #info #main #howTo #HTitems {
+  width: 96%;
+}
+body main #FoodInfo #info #main #howTo #HTitems .ht {
+  width: 100%;
+  display: flex;
+}
+body main #FoodInfo #info #main #howTo #HTitems .ht .instr {
+  text-align: left;
+  padding-left: 10px;
+}
+body main #FoodInfo #info #main #howTo #HTitems .ht .index {
+  width: 30px;
+  color: #ff7b00;
+  border: none;
+}
+body main #FoodInfo #info #tagar {
+  margin-top: 30px;
+  display: block;
+  border-top: solid 1px;
+}
+body main #FoodInfo #info #tagar h3 {
+  color: gray;
+  width: 100%;
+  text-align: center;
+}
+body main #FoodInfo #info #tagar #tags {
+  display: flex;
+  flex-direction: row;
+}
+body main #FoodInfo #info #tagar #tags #tag {
+  display: flex;
+  flex-direction: row;
+}
+body main #FoodInfo #info #tagar #tags #tag p {
+  font-size: 10px;
+  width: 50px;
+  border: none;
+  border-bottom: solid 1px #ff7b00;
+}
+body main #login {
+  border-left: solid #ff7b00;
+  margin: 35px;
+}
+body main #login form {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+body main #login form input {
+  margin: 1px;
+  padding: 4px;
+  height: 30px;
+  width: 200px;
+  font-size: 20px;
+  background: none;
+  border: none;
+  border-bottom: solid 1px black;
+  outline: none;
+}
+body main #login form #button {
+  display: flex;
+  justify-content: center;
+}
+body main #login form #button input {
+  width: 80px;
+}
+body main #login form #buttonCreate {
+  display: flex;
+  justify-content: center;
+}
+body main #login form #buttonCreate input {
+  width: 120px;
+}
+body main #login form a {
+  float: right;
+  margin-top: 10px;
+}
+body main #profile {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+}
+body main #profile #profileHeader {
+  width: 100%;
+}
+body main #profile #profileHeader h1 {
+  grid-area: name;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+body main #profile #profileInfo {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+body main #profile #profileInfo #profileSide {
+  flex: 1;
+  border-right: solid #ff7b00;
+  padding-left: 20px;
+  padding-top: 30px;
+}
+body main #profile #profileInfo #profileSide h2 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+body main #profile #profileInfo #profileSide h2 a {
+  color: black;
+}
+body main #profile #profileInfo #profileSide ul li {
+  list-style-type: none;
+  border-left: solid #ff7b00;
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+body main #profile #profileInfo #profileSide ul li .info {
+  color: gray;
+  margin-left: 10px;
+}
+body main #profile #profileInfo #profileMain {
+  flex: 3;
+}
+body main #profile #profileInfo #profileMain #foodCreated, body main #profile #profileInfo #profileMain #foodSaved {
+  padding: 30px;
+  display: block;
+}
+body main #profile #profileInfo #profileMain #foodCreated h4, body main #profile #profileInfo #profileMain #foodSaved h4 {
+  text-align: center;
+  margin-right: 80px;
+  padding-bottom: 20px;
+}
+body main #profile #profileInfo #profileMain #foodCreated ul, body main #profile #profileInfo #profileMain #foodSaved ul {
+  list-style-type: none;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 20px;
+}
+body main #profile #profileInfo #profileMain #foodCreated ul li, body main #profile #profileInfo #profileMain #foodSaved ul li {
+  display: inline-block;
+}
+
+/*# sourceMappingURL=style.css.map */
