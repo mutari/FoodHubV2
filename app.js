@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongodb = require('mongodb').MongoClient;
 const cookieParser = require('cookie-parser');
+const upload = require("express-fileupload");
 
 const foodRouter = require('./routes/FoodRoutes');
 const userRouter = require('./routes/UserRoutes');
@@ -21,8 +22,9 @@ const logedin = require('./modules/IsUserLogedIn');
 
     app.set('view engine', 'pug');
     app.use(express.static(__dirname + '/public'));
-    app.use(express.urlencoded({extended: true}));
+    //app.use(express.urlencoded({extended: true}));
     app.use(cookieParser());
+    app.use(upload());
 
     //lägger till db col i req för att man ska komma åt objekten över allt
     app.use((req, res, next) => {

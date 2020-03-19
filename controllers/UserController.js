@@ -116,12 +116,12 @@ module.exports = {
         if(!user.save.find((e) => e == req.params.id)) {
             user.save.push(req.params.id);
             await req.dbUser.updateOne({"email": req.token.email}, {$set: user});
-            res.redirect('/');
+            res.redirect('back');
         }
         else {
             user.save = user.save.filter(e => e != req.params.id)
             await req.dbUser.updateOne({"email": req.token.email}, {$set: user});
-            res.redirect('/');
+            res.redirect('back');
         }
 
 

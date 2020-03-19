@@ -14,4 +14,7 @@ router.post('/create/food', auth, controllers.createFood);
 router.get('/rewrite/food/:id', auth, controllers.renderRewriteFood);
 router.post('/rewrite/food/:id', auth, controllers.rewriteFood);
 
+router.get('/delete/food/:id', auth, controllers.deleteFood);
+
+
 module.exports = router;

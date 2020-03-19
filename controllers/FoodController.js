@@ -48,8 +48,15 @@ module.exports = {
 
     createFood: async (req, res) => {
         try {
+            if(req.files.image) {
+                let imgname = Date.now()+".jpg"
+                let imgaddres = require('path').join(__dirname, "/..", "/images/", imgname);
+                req.files.image.mv(imgaddres);
+                req.body.image = '/image/' + imgname;
+            } else
+                req.body.image = "https://source.unsplash.com/298x223/?food&sig=" + parseInt(Math.random()*100000000);
+            
             //sparar all info man behöver i body för att sedan skicka body objektet till servern
-            req.body.image = "https://source.unsplash.com/298x223/?food&sig=" + parseInt(Math.random()*100000000);
             req.body.user = req.token;
 
             let d = new Date();
@@ -66,7 +73,7 @@ module.exports = {
 
     deleteFood: async (req, res) => {
         try {
-            await req.dbFood.remove({"_id": ObjectID(req.params.id)});
+            await req.dbFood.deleteOne({"_id": ObjectID(req.params.id)});
             res.redirect('/profile');
         } catch (err) {console.log(`Somthing whent wrong, route: deleteFood, msg: ${err}`);}
     },
