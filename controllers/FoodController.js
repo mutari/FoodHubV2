@@ -18,7 +18,7 @@ module.exports = {
             
             const user = await req.dbUser.findOne({"email": req.token.email}); //hämtar den profilen som är inlågad
 
-            res.render('index', {items: food, logedIn: req.token.username, profile: user, side: req.query.side, maxside: Math.floor(antal/maxOnSide)});
+            res.render('index', {items: food, logedIn: req.token.username, profile: user, side: req.query.side, maxside: Math.floor(antal)});
         } catch (err) {console.log(`Somthing whent wrong, route: index, msg: ${err}`);}
     },
 
