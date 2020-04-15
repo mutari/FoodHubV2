@@ -37,6 +37,7 @@ module.exports = {
             //måste validera alla inputs inan jag tillåter en att skapa ett konto
             const errors = validationResult(req);
             if(errors.isEmpty()) {
+                console.log(req.body.password);
                 bcrypt.hash(req.body.password, 12, async (err, hash) => {
                     delete req.body.password;
                     delete req.body.password_rep;
