@@ -12,6 +12,7 @@ module.exports = async (req,res,next) => {
     {
         const password = req.body.password;
         const hash = user.hash;  // hashat lösenord från db/fil/minnede
+        console.log('find hash :: ', user);
         //Kontrollera lösenord med bcrypt
         bcrypt.compare(password,hash,function(err,success){
           
@@ -23,12 +24,16 @@ module.exports = async (req,res,next) => {
                  
                 next();
             }
-            else
+            else {
+                console.log('försökte logga in och misslyckades med compare');
                 res.redirect("/login?login error");
+            }
         });
     }
-    else
+    else {
+        console.log('försökte logga in och användarnamnet fel');
         res.redirect("/login?login error");
+    }
 
    
 }
