@@ -4,21 +4,24 @@ const jimp = require('jimp');
 module.exports = {
 
     index: async (req, res) => {
-        var antal = await req.dbFood.find().toArray().lenght;
+        var antal = await req.dbFood.find().toArray();
+        antal = antal.length;
         var maxOnSide = req.query.maxside || 6;
-        var sida = 0;
+        var sida = req.query.side;
         try {
             //bestämmer hur många som ska levereras
-            if(req.query.side) {
+            if(sida) {
                 if(sida < 0) sida = 0;
-                var food = await req.dbFood.find().skip(maxOnSide*req.query.side).limit(maxOnSide).toArray(); //hemtar alla maträtter i från databasen mellan vissa värden
+                var food = await req.dbFood.find().skip(maxOnSide*sida).limit(maxOnSide).toArray(); //hemtar alla maträtter i från databasen mellan vissa värden
             }
             else
                 var food = await req.dbFood.find().toArray(); //hemtar alla maträtter i från databasen
             
             const user = await req.dbUser.findOne({"email": req.token.email}); //hämtar den profilen som är inlågad
 
-            res.render('index', {items: food, logedIn: req.token.username, profile: user, side: req.query.side, maxside: Math.floor(antal)});
+            console.log('side :: ', sida, '     maxSide :: ', antal);
+
+            res.render('index', {items: food, logedIn: req.token.username, profile: user, side: sida, maxside: (Math.floor(antal/maxOnSide))});
         } catch (err) {console.log(`Somthing whent wrong, route: index, msg: ${err}`);}
     },
 
