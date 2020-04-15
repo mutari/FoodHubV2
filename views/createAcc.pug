@@ -14,7 +14,7 @@ body
             if old
                 p=old.msg
         
-            form(action="/createacc", method="post")
+            form(action="/createacc", method="post", enctype="multipart/form-data")
                 input(type="text", name="username", placeholder="användarnamn", value=`${old ? old.username : ''}`)
                 input(type="text", name="name", placeholder="namn", value=`${old ? old.name : ''}`)
                 input(type="password", name="password", placeholder="lösenord")

@@ -10,7 +10,7 @@ body
 
     main
         #login
-            form(action="/rewrite/profile", method="post")
+            form(action="/rewrite/profile", method="post", enctype="multipart/form-data")
                 input(type="text", name="name", placeholder="namn", value=`${name ? name : ""}`)
                 input(type="text", name="email", placeholder="email", value=`${email ? email : ""}`)
                 input(type="text", name="phone", placeholder="telefonummer", value=`${phone ? phone : ""}`)

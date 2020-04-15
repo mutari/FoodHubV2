@@ -1,4 +1,5 @@
 const ObjectID = require('mongodb').ObjectID;
+const jimp = require('jimp');
 
 module.exports = {
 
@@ -52,8 +53,12 @@ module.exports = {
                 let imgname = Date.now()+".jpg"
                 let imgaddres = require('path').join(__dirname, "/..", "/images/", imgname);
                 req.files.image.mv(imgaddres);
+                jimp.read(imgaddres, (err, image) => {
+                    if(err) throw err
+                    image.resize(256, jimp.AUTO);
+                })
                 req.body.image = '/image/' + imgname;
-            } else
+            } else // om användaren inte laddat upp en bild hämts en random bild
                 req.body.image = "https://source.unsplash.com/298x223/?food&sig=" + parseInt(Math.random()*100000000);
             
             //sparar all info man behöver i body för att sedan skicka body objektet till servern

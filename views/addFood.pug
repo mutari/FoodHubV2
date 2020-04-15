@@ -43,48 +43,11 @@ body
 
         //show images
         document.getElementById('img').addEventListener('change', e => {
-
-            
-            
-            const width = 600;
-            const scaleFactor = width / img.width;
-            const fileName = e.target.files[0].name;
-            const reader = new FileReader();
-            reader.readAsDataURL(e.target.files[0]);
-            reader.onload = event => {
-                const img = new Image();
-                img.src = event.target.result;
-                img.onload = () => {
-                        const elem = document.createElement('canvas');
-                        elem.width = width;
-                        elem.height = img.height * scaleFactor;
-                        const ctx = elem.getContext('2d');
-                        // img.width and img.height will contain the original dimensions
-                        ctx.drawImage(img, 0, 0, width, img.height * scaleFactor);
-                        ctx.canvas.toBlob((blob) => {
-                            const file = new File([blob], fileName, {
-                                type: 'image/jpeg',
-                                lastModified: Date.now()
-                            });
-                            console.log(file);
-                            const reader = new FileReader();
-                            reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(document.getElementById('previmg'));
-                            reader.readAsDataURL(file);
-
-                        }, 'image/jpeg', 1);
-                    },
-                    reader.onerror = error => console.log(error);
-            };
-
-
-
-
-            /*
             console.log(document.getElementById('img').files[0]);
 
             const reader = new FileReader();
             reader.onload = (function(aImg) { return function(e) { aImg.src = e.target.result; }; })(document.getElementById('previmg'));
-            reader.readAsDataURL(document.getElementById('img').files[0]);*/
+            reader.readAsDataURL(document.getElementById('img').files[0]);
         });
 
         //taggar

@@ -5,7 +5,7 @@ body
 
     main 
         #addFood
-            form(action=`/rewrite/food/${_id}`, method="post", id="foodForm")
+            form(action=`/rewrite/food/${_id}`, method="post", id="foodForm", enctype="multipart/form-data")
                 input(type="text", name="name", placeholder="name", value=`${name}`)
                 #info
                     #main

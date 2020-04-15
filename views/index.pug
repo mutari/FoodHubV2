@@ -8,7 +8,7 @@ body
     main 
         #foods
             #tools
-                form(action="/sort", method="post", autocomplete="off")
+                form(action="/sort", method="post", autocomplete="off", enctype="multipart/form-data")
                     #tag
                         input(type="text", placeholder="search by tag", name="search", id="search")
                         input(type="submit", value="sök")

@@ -358,14 +358,15 @@ body {
                                 #prev {
                                     display: flex;
                                     justify-content: center;
-                                    border: solid 1px;
                                     width: 298px;
                                     height: 223px;
+                                    border: solid 1px;
 
                                     img {
                                         max-width: 100%;
                                         max-height: 100%;
-                                        display: block;
+                                        object-fit: contain;
+
                                     }
                                 }
 

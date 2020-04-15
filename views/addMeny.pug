@@ -6,7 +6,7 @@ body
     main
 
         #meny
-            form(action="/week/create", method="post")
+            form(action="/week/create", method="post", enctype="multipart/form-data")
                 ul
                     each v in ['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag', 'Söndag']
                         li
