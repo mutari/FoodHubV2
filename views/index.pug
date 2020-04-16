@@ -39,8 +39,10 @@ body
                         a(href=`/?side=${Number(side)-1}`) back
                     #numes
                         each val in [Number(side)-2, Number(side)-1, Number(side), Number(side)+1, Number(side)+2]
-                            if val >= 0 && val <= maxside
+                            if val >= 0 && val <= maxside && val == side
                                 a(href=`/?side=${val}`)=val
+			    else
+				a(href=`/?side=${val}`, class='saved')=val
                     if side < maxside
                         a(href=`/?side=${Number(side)+1}`) next
 
