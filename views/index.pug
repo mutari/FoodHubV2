@@ -42,7 +42,8 @@ body
                             if val >= 0 && val <= maxside && val == side
                                 a(href=`/?side=${val}`)=val
                             else
-                                a(href=`/?side=${val}`, class='saved')=val
+                                if val == side
+                                    a(href=`/?side=${val}`, class='saved')=val
                     if side < maxside
                         a(href=`/?side=${Number(side)+1}`) next
 
