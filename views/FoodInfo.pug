@@ -9,7 +9,8 @@ body
             #info
                 #main
                     #itemDiv
-                        img(src=`${image}`, alt=`'${name}' image`)
+                        .crop
+                            img(src=`${image}`, alt=`'${name}' image`)
                         .block
                         h3 ingridiens
                         #items
