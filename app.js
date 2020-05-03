@@ -15,7 +15,6 @@ const logedin = require('./modules/IsUserLogedIn');
     const con = await mongodb.connect(process.env.CONSTRING, {useNewUrlParser: true, useUnifiedTopology: true});
     
     const db = await con.db('menu');
-    console.log(db);
     const foodCol = await db.collection('food');
     const userCol = await db.collection('user');
 

@@ -56,10 +56,11 @@ module.exports = {
             if(req.files.image) {
                 let imgname = Date.now()+".jpg"
                 let imgaddres = require('path').join(__dirname, "/..", "/images/", imgname);
-                req.files.image.mv(imgaddres);
+                await req.files.image.mv(imgaddres);
                 jimp.read(imgaddres, (err, image) => {
                     if(err) throw err
-                    image.resize(256, jimp.AUTO);
+                    console.log('rezize image');
+                    image.resize(256, jimp.AUTO).write('./images/' + imgname);
                 })
                 req.body.image = '/image/' + imgname;
             } else // om användaren inte laddat upp en bild hämts en random bild
