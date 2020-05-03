@@ -420,6 +420,8 @@ body main #FoodInfo #info #main #itemDiv {
 }
 body main #FoodInfo #info #main #itemDiv img {
   margin: 10px;
+  width: 298;
+  height: 223;
 }
 body main #FoodInfo #info #main #itemDiv .block {
   height: 20px;
