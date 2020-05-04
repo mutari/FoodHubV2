@@ -32,7 +32,8 @@ body
                             each item in foods
                                 li
                                     .card
-                                        img(src=`${item.image}`, alt=`'${item.name}' image`, onclick=`location.href = '/get/${item._id}';`)
+                                        .crop
+                                            img(src=`${item.image}`, alt=`'${item.name}' image`, onclick=`location.href = '/get/${item._id}';`)
                                         h3=item.name
                                         p=item.discription
                                         .tools
@@ -45,7 +46,8 @@ body
                             each item in save
                                 li
                                     .card
-                                        img(src=`${item.image}`, alt=`'${item.name}' image`, onclick=`location.href = '/get/${item._id}';`)
+                                        .crop
+                                            img(src=`${item.image}`, alt=`'${item.name}' image`, onclick=`location.href = '/get/${item._id}';`)
                                         h3=item.name
                                         p=item.discription
                                         .tools
