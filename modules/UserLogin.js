@@ -26,13 +26,13 @@ module.exports = async (req,res,next) => {
             }
             else {
                 console.log('försökte logga in och misslyckades med compare');
-                res.redirect("/login?login error");
+                res.redirect("/login?fel lösenord");
             }
         });
     }
     else {
         console.log('försökte logga in och användarnamnet fel');
-        res.redirect("/login?login error");
+        res.redirect("/login?emailen finns inte i databasen");
     }
 
    

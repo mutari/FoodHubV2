@@ -106,8 +106,18 @@ module.exports = {
 
     rewriteProfile: async (req, res) => {
 
-        await app.dbUser.updateOne({"_id": ObjectID(req.token.id)}, {"$set": req.body});
-        res.redirect('/profile');
+        try {
+
+            const errors = validationResult(req);
+            if(errors.isEmpty()) {
+                await req.dbUser.updateOne({"_id": ObjectID(req.token.id)}, {"$set": req.body});   
+                res.redirect('/profile');
+            }
+            else { 
+                console.log(`validation errors:`, errors);
+                res.render('/profile?somthing whent wrong whit the changes and they did not applay');
+            }
+        } catch(err) {console.log(`Somthing whent wrong, route: rewriteProfile, msg: ${err}`);}
 
     },
 

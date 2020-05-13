@@ -8,12 +8,16 @@ const auth = require('../modules/UserAuth');
 const login = require('../modules/UserLogin');
 
 router.get('/login', user.renderLogin);
-router.post('/login', login, user.login);
+router.post('/login',[
+    //valendering
+    check('email', 'Somthing whent wronge white email').isEmail().normalizeEmail().not().isEmpty(),
+    check('password', 'Somthing whent wronge white password').not().isEmpty()
+], login, user.login);
 
 router.get('/createacc', user.renderCreateAcc);
 router.post('/createacc',[
     //valendering
-    check('email', 'Somthing whent wronge white email').isEmail().normalizeEmail().custom(async (val, { req }) => {
+    check('email', 'Somthing whent wronge white email').isEmail().normalizeEmail().not().isEmpty().custom(async (val, { req }) => {
         var email = await req.dbUser.findOne({email: val});
         if(email)
             return Promise.reject();
@@ -31,7 +35,17 @@ router.get('/profile/:id', user.getProfileById);
 router.get('/save/:id', auth, user.saveFood);
 
 router.get('/rewrite/profile', auth, user.renderRewriteProfile);
-router.post('/rewrite/profile', auth, user.rewriteProfile);
+router.post('/rewrite/profile',[
+    //valedering
+    check('email', 'Somthing whent wronge white email').isEmail().normalizeEmail().custom(async (val, { req }) => {
+        //får inte vara lik någon annan email i databasen
+        var email = await req.dbUser.findOne({email: val});
+        if(email && email.id != req.token.id) // email får vara samma som användaren nuvarande använder
+            return Promise.reject();
+    }),
+    body('name').trim().escape().not(),
+    body('phone').trim().escape().not()
+], auth, user.rewriteProfile);
 
 router.get('/image/:name', user.loadImage);
 
