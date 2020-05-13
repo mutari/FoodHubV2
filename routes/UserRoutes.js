@@ -37,10 +37,10 @@ router.get('/save/:id', auth, user.saveFood);
 router.get('/rewrite/profile', auth, user.renderRewriteProfile);
 router.post('/rewrite/profile',[
     //valedering
-    check('email', 'Somthing whent wronge white email').isEmail().normalizeEmail().custom(async (val, { req }) => {
+    check('email', 'Email alredy exists').isEmail().normalizeEmail().custom(async (val, { req }) => {
         //får inte vara lik någon annan email i databasen
         var email = await req.dbUser.findOne({email: val});
-        if(email && email.id != req.token.id) // email får vara samma som användaren nuvarande använder
+        if(email && email._id != req.token.id) // email får vara samma som användaren nuvarande använder
             return Promise.reject();
     }),
     body('name').trim().escape().not(),

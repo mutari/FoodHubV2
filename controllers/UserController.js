@@ -115,7 +115,7 @@ module.exports = {
             }
             else { 
                 console.log(`validation errors:`, errors);
-                res.render('/profile?somthing whent wrong whit the changes and they did not applay');
+                res.redirect('/profile?somthing whent wrong whit the changes and they did not applay');
             }
         } catch(err) {console.log(`Somthing whent wrong, route: rewriteProfile, msg: ${err}`);}
 
